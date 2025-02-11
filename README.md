@@ -95,4 +95,4 @@ ls | mycommand
 | 5    | `echo "Hello" \| mycommand`                        | Test the command with a pipe     |
 
 
-#### 🎯 Bonus: Examples /commands
+#### 🎯 Bonus: Examples in folder /commands
