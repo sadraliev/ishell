@@ -1,5 +1,26 @@
-# Creating Your Own Shell Command in Linux
+## Table of Contents
+- [Creating Your Own Shell Command in Linux](#creating-your-own-shell-command-in-linux)
+  - [This guide will walk you through the basics of creating your own custom shell command in Linux. By the end, you'll be able to create a simple command, make it executable, and use it from anywhere in the terminal.](#this-guide-will-walk-you-through-the-basics-of-creating-your-own-custom-shell-command-in-linux-by-the-end-youll-be-able-to-create-a-simple-command-make-it-executable-and-use-it-from-anywhere-in-the-terminal)
+  - [📌 Step 1: Write a Script](#-step-1-write-a-script)
+    - [Example: Creating a Python Command](#example-creating-a-python-command)
+  - [📌 Step 2: Make the Script Executable](#-step-2-make-the-script-executable)
+  - [📌 Step 3: Move the Script to a System Directory](#-step-3-move-the-script-to-a-system-directory)
+  - [📌 Step 4: Verify Your Command (Optional)](#-step-4-verify-your-command-optional)
+  - [📌 Step 5: Testing Your Command with Pipes](#-step-5-testing-your-command-with-pipes)
+  - [🎯 Summary](#-summary)
+      - [🎯 Bonus: Examples in folder /commands](#-bonus-examples-in-folder-commands)
+- [Creating Your own Shell](#creating-your-own-shell)
+  - [📌Step 1: Create a Simple Shell in Python](#step-1-create-a-simple-shell-in-python)
+  - [📌Step 2: Make the Shell Executable](#step-2-make-the-shell-executable)
+    - [Pay Attention!](#pay-attention)
+  - [📌Step 3: Change Default Shell to Your Own](#step-3-change-default-shell-to-your-own)
+    - [Step 3.1](#step-31)
+    - [Step 3.1](#step-31-1)
+    - [Step 3.3: Change Your Default Shell](#step-33-change-your-default-shell)
+  - [📌Step 4: Apply Changes](#step-4-apply-changes)
+  - [🎯Revert Back to Bash (If Needed)](#revert-back-to-bash-if-needed)
 
+# Creating Your Own Shell Command in Linux
 This guide will walk you through the basics of creating your own custom shell command in Linux. By the end, you'll be able to create a simple command, make it executable, and use it from anywhere in the terminal.
 ---
 ## 📌 Step 1: Write a Script
@@ -98,7 +119,7 @@ ls | mycommand
 #### 🎯 Bonus: Examples in folder /commands
 
 # Creating Your own Shell
-## Step 1: Create a Simple Shell in Python
+## 📌Step 1: Create a Simple Shell in Python
 First, create a file called myshell.py and add the following code:
 
 myshell.py (Basic Version)
@@ -154,7 +175,7 @@ if __name__ == "__main__":
 
 ```
 
-## Step 2: Make the Shell Executable
+## 📌Step 2: Make the Shell Executable
 Now, make myshell.py executable:
 
 ```sh
@@ -172,7 +193,7 @@ The file /etc/passwd contains user account details, including the default shell.
 sudo cp /etc/passwd /etc/passwd.bak
 ```
 
-## Step 3: Change Default Shell to Your Own
+## 📌Step 3: Change Default Shell to Your Own
 Now, let's replace Bash with your custom shell.
 ### Step 3.1 
 Move `ishell.py` to `/bin` directory
@@ -206,14 +227,14 @@ user:x:1000:1000::/home/user:/bin/ishell
 ```
 Save and exit (:wq then Enter).
 
-## Step 4: Apply Changes
+## 📌Step 4: Apply Changes
 To apply the new shell without logging out, run:
 ```sh
 exec /home/user/myshell.py
 ```
 Now, every time you log in, your system will start with your shell instead of Bash.
 
-## Revert Back to Bash (If Needed)
+## 🎯Revert Back to Bash (If Needed)
 If something goes wrong and you can't log in, switch to a TTY session:
 - Press CTRL + ALT + F3 (or F2, F4, etc.).
 - Log in with your username and password.
