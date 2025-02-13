@@ -96,3 +96,133 @@ ls | mycommand
 
 
 #### 🎯 Bonus: Examples in folder /commands
+
+# Creating Your own Shell
+## Step 1: Create a Simple Shell in Python
+First, create a file called myshell.py and add the following code:
+
+myshell.py (Basic Version)
+
+```python
+import os
+import sys
+import subprocess
+
+def read_input():
+    """Reads input from the user."""
+    return input("mysh> ")
+
+def parse_input(input_line):
+    """Splits input into tokens (arguments)."""
+    return input_line.strip().split()
+
+def execute_command(command):
+    """Executes the command entered by the user."""
+    if not command:
+        return  # If the command is empty, do nothing
+
+    if command[0] == "exit":
+        sys.exit(0)
+
+    if command[0] == "cd":
+        try:
+            os.chdir(command[1])
+        except IndexError:
+            print("cd: missing argument")
+        except FileNotFoundError:
+            print(f"cd: no such directory: {command[1]}")
+        return
+
+    try:
+        subprocess.run(command)
+    except FileNotFoundError:
+        print(f"{command[0]}: command not found")
+
+def main():
+    """Main shell loop."""
+    while True:
+        try:
+            user_input = read_input()
+            command = parse_input(user_input)
+            execute_command(command)
+        except KeyboardInterrupt:
+            print("\nExiting shell...")
+            sys.exit(0)
+
+if __name__ == "__main__":
+    main()
+
+```
+
+## Step 2: Make the Shell Executable
+Now, make myshell.py executable:
+
+```sh
+chmod +x myshell.py
+```
+You can now run it:
+```sh
+./myshell.py
+```
+This will launch your custom shell, and you can execute basic commands like ls, pwd, echo, and cd.
+
+### Pay Attention!
+The file /etc/passwd contains user account details, including the default shell. Before modifying it, create a backup:
+```sh
+sudo cp /etc/passwd /etc/passwd.bak
+```
+
+## Step 3: Change Default Shell to Your Own
+Now, let's replace Bash with your custom shell.
+### Step 3.1 
+Move `ishell.py` to `/bin` directory
+```sh
+cp ishell.py /bin/ishell
+```
+### Step 3.1 
+Add Your Shell to /etc/shells
+The system only allows shells listed in /etc/shells. To add yours:
+```sh
+vi /etc/shells
+```
+At the end of the file, add:
+```
+/bin/ishell
+/usr/bin/ishell
+```
+Save and exit.
+### Step 3.3: Change Your Default Shell
+Open /etc/passwd with a text editor:
+```sh
+vi /etc/passwd
+```
+Find the line for your user (example for user):
+```vi
+user:x:1000:1000::/home/user:/bin/bash
+```
+Change /bin/bash to your custom shell’s full path:
+```vi
+user:x:1000:1000::/home/user:/bin/ishell
+```
+Save and exit (:wq then Enter).
+
+## Step 4: Apply Changes
+To apply the new shell without logging out, run:
+```sh
+exec /home/user/myshell.py
+```
+Now, every time you log in, your system will start with your shell instead of Bash.
+
+## Revert Back to Bash (If Needed)
+If something goes wrong and you can't log in, switch to a TTY session:
+- Press CTRL + ALT + F3 (or F2, F4, etc.).
+- Log in with your username and password.
+- Restore the original /etc/passwd:
+```sh
+sudo cp /etc/passwd.bak /etc/passwd
+```
+- then restart
+```sh
+reboot
+```
+Your shell will be back to Bash (/bin/bash).
