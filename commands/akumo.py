@@ -64,25 +64,27 @@ def draw_pumbaa():
 
 def main():
     try:
-        # Define emojis for characters
 
-        simba = "🦁"
-        timon = "🦍"
-        pumbaa = "🐗"
+        MARGIN_LEFT = "   "
+        MARGIN_TOP = "\n"
+        MARGIN_BOTTOM = "\n\n\n"
+        OUTPUT_TITLE = f"{MARGIN_LEFT}{RED}THE OUTPUT:{RESET}\n"
 
         # Check if arguments are provided
         if len(sys.argv) > 1:
             input_text = " ".join(sys.argv[1:])  # Use command-line arguments as input
-            print("   Enjoy life  - No worries! Akumo Matata! {simba} {timon} {pumbaa}\n")
+            print(f"{MARGIN_TOP}{MARGIN_LEFT}{BOLD}Akumo Matata{RESET} – No Worries, Just Learning ☁️⛅🌤!{MARGIN_TOP}")
+            print(OUTPUT_TITLE)
+            print(f"{MARGIN_LEFT}{input_text}")
         elif not sys.stdin.isatty():  # Check if input is coming from a pipe (the Output)
             input_text = sys.stdin.read().strip()
             # Print ASCII art first
             draw_pumbaa()
-            print(f"{RED}THE OUTPUT{RESET}\n")
-            print(f"{GREEN}{input_text}{RESET}\n\n\n")
+            print(OUTPUT_TITLE)
+            print(f"{MARGIN_LEFT}{GREEN}{input_text}{RESET}{MARGIN_BOTTOM}")
         else:
-            input_text = f"\n   Where is {BOLD}prompt{RESET} ?👀 \n   Baby don't hurt me, don't hurt me, no more.💔❤️‍🩹😭🎶"
-            print(f"   {input_text}\n\n\n")
+            input_text = f"{MARGIN_TOP}{MARGIN_LEFT}Where is {BOLD}prompt{RESET} ?{MARGIN_TOP}{MARGIN_LEFT}👀{MARGIN_TOP}{MARGIN_LEFT}Baby don't hurt me, don't hurt me, no more.💔❤️‍🩹😭🎶"
+            print(f"{MARGIN_LEFT}{input_text}{MARGIN_BOTTOM}")
         
         print(RESET)
 
